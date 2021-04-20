@@ -1,38 +1,15 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import data from "./StudentTable.json";
-import useCustomForm from "./hooks/useCustomForm"
 
 function App() {
-  const [myData, setData] = useState([]);
-
-  const initialValues = {
-    name:"",
-    lastName:"",
-    age:0,
-    scores:{
-      test1:0,
-      test2:0,
-      test3:0
-    }
-  };
-
-
-  const {
-    values,
-    errors,
-    touched,
-    handleChange,
-    handleBlur,
-    handleSubmit
-  } = useCustomForm({ 
-    initialValues, 
-    onSubmit: values => setData({ ...myData, values })
-  });
-
-
-
-
+  const [myData, setData] = useState(data);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [age, setAge] = useState(0);
+  const [test1, setTest1] = useState(0);
+  const [test2, setTest2] = useState(0);
+  const [test3, setTest3] = useState(0);
 
   useEffect(() => {
     let newData = data.map((data) => {
@@ -43,7 +20,34 @@ function App() {
     newData.sort((a, b) => (a.scoreSum < b.scoreSum ? 1 : -1));
 
     setData(newData);
-  }, []);
+
+    
+  },[]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let scores = {
+      "test1": test1,
+      "test2": test2,
+      "test3": test3
+    };
+    const addEntry = (entry) => {
+      let scoreSum = entry.scores.test1 + entry.scores.test2 + entry.scores.test3;
+      let totaledEntry = { ...entry, scoreSum };
+      let entries = [...myData, totaledEntry];
+      entries.sort((a,b) => (a.scoreSum < b.scoreSum ? 1: -1));
+      console.log(entries);
+      setData(entries);
+      setFirstName("");
+      setLastName("");
+      setAge(0);
+      setTest1(0);
+      setTest2(0);
+      setTest3(0);
+    };
+
+    addEntry({ firstName, lastName, age, scores });
+  };
 
   if (myData.length > 0) {
     return (
@@ -76,26 +80,72 @@ function App() {
             </tbody>
           </table>
         </div>
-        <div >
-          <form onSubmit={handleSubmit}>
-            <h1>Custom Hooks Form</h1>
+        <div>
+          <form
+            onSubmit={(e) => {
+              handleSubmit(e);
+            }}
+          >
+            <h1>New Entry</h1>
             <label>Age</label>
-            <input type="number" name="age"  onChange={handleChange} value={values.age} />
+            <input
+              type="number"
+              name="age"
+              onChange={(e) => {
+                setAge(parseInt(e.target.value));
+              }}
+              value={age}
+            />
             <br />
-            <label>Name</label>
-            <input type="text" name="name" onChange={handleChange} value={values.name} />
+            <label>First Name</label>
+            <input
+              type="text"
+              name="firstName"
+              onChange={(e) => {
+                setFirstName(e.target.value);
+              }}
+              value={firstName}
+            />
             <br />
-            <label>LastName</label>
-            <input type="text" name="lastName"  onChange={handleChange} value={values.lastName} />
+            <label>Last Name</label>
+            <input
+              type="text"
+              name="lastName"
+              onChange={(e) => {
+                setLastName(e.target.value);
+              }}
+              value={lastName}
+            />
             <br />
-            <label>Test Score 1</label>
-            <input type="number" name="values.scores.test1"  onChange={handleChange} value={values.scores.test1} />
+            <label>Test 1</label>
+            <input
+              type="number"
+              name="test1"
+              onChange={(e) => {
+                setTest1(parseInt(e.target.value));
+              }}
+              value={test1}
+            />
             <br />
-            <label>Test Score 2</label>
-            <input type="number" name={values.scores.test2}  onChange={handleChange} value={values.scores.test2} />
+            <label>Test 2</label>
+            <input
+              type="number"
+              name="test2"
+              onChange={(e) => {
+                setTest2(parseInt(e.target.value));
+              }}
+              value={test2}
+            />
             <br />
-            <label>Test Score 3</label>
-            <input type="number" name={values.scores.test3}  onChange={handleChange} value={values.scores.test3} />
+            <label>Test 3</label>
+            <input
+              type="number"
+              name="test3"
+              onChange={(e) => {
+                setTest3(parseInt(e.target.value));
+              }}
+              value={test3}
+            />
             <br />
             <button type="submit">Submit</button>
           </form>
