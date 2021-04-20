@@ -1,5 +1,35 @@
+table{
+  text-align: left;
+  border-spacing: 0px;
+  margin: 5rem 2rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  border: 1px solid #a7a7a7;
+  box-shadow: #acacac 0 0 100px;
+}
+
+thead{
+  font-size: 1.25rem;
+  font-weight:bold;
+  color:#fff;
+  background:#353535;
+}
+
+td{
+  padding:1.25rem;
+}
+
+tbody tr:nth-child(even){
+background: #dfdfdf;
+}
+
+
 .App {
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
 .App-logo {
