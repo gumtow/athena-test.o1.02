@@ -37,6 +37,40 @@ background: #dfdfdf;
   pointer-events: none;
 }
 
+#entry-form{
+  text-align: center;
+  display:block;
+}
+
+#entry-form label{
+ text-align: right;
+ margin: 1rem 3rem 0 0;
+ min-width: 75px;
+ display: inline-block;
+}
+
+#entry-form input{
+  padding: 1rem;
+  margin: 1rem;
+  min-width: 500px;
+  justify-content: right;
+  align-items: center;
+  border-radius: .5rem;
+  border: grey 1px solid;
+  
+}
+
+button {
+  margin-top:2rem;
+  padding:1rem 5rem;
+  border-radius: .5rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color:#fff;
+  background: #282c34;
+  border: none;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
